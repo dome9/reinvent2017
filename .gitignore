@@ -1,0 +1,4 @@
+v2/codepipeline-lambda/test.py
+*.zip
+*.pyc
+.vscode
