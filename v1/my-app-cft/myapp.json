@@ -1,6 +1,6 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "Sample, test only template that creates a sample Security Group allowing all SSH traffic inbound from 0.0.0.0/0 .  This template is for testing purposes only.",
+  "Description": "a sample test 'app' that creates a single SG with 1 SSH rule",
   "Parameters": {
     "VPCName": {
       "Description": "ID of the existing VPC.",
@@ -25,4 +25,4 @@
         "VpcId" : { "Ref" : "VPCName" }}
       }
   }
-  }
+}

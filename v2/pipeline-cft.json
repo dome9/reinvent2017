@@ -278,7 +278,7 @@
         }
       }
     },
-    "CFNValidateLambda": {
+    "CFTValidateLambda": {
       "Type": "AWS::Lambda::Function",
       "DependsOn": [
         "CodePipelineLambdaRole",
@@ -301,7 +301,7 @@
         },
         "Description": "Always return success",
         "Timeout": 60,
-        "Handler": "cfn_validate_lambda.lambda_handler",
+        "Handler": "cft_validate_lambda.lambda_handler",
         "Runtime": "python2.7"
       }
     },
@@ -489,7 +489,7 @@
                 },
                 "Configuration": {
                   "FunctionName": {
-                    "Ref": "CFNValidateLambda"
+                    "Ref": "CFTValidateLambda"
                   },
                   "UserParameters": {
                     "Fn::Sub": "{\"input\": \"TemplateSource\", \"file\": \"${TemplateFilePath}\",\"output\": \"${S3Bucket}\" ,\"d9BundleId\":${Dome9BundleId} , \"prodStackConfig\":\"${ProdStackConfig}\" }"
@@ -579,7 +579,7 @@
     "LambdaFunction": {
       "Description": "Lambda Function Name",
       "Value": {
-        "Ref": "CFNValidateLambda"
+        "Ref": "CFTValidateLambda"
       }
     }
   }

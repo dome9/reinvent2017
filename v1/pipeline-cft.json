@@ -1,9 +1,9 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
-  "Description": "AWS CloudFormation Sample Template Continuous Delievery: This template builds an AWS CodePipeline pipeline that implements a continuous delivery release process for AWS CloudFormation stacks. Submit a CloudFormation source artifact to an Amazon S3 location before building the pipeline. The pipeline uses the artifact to automatically create stacks and change sets. **WARNING** This template creates an Amazon EC2 instance. You will be billed for the AWS resources used when you create a stack using this template.\n",
+  "Description": "DevSecOps pipeline sample (v1) using AWS code-pipeline and Lambda validation functions for CFT and live stack",
   "Parameters": {
     "PipelineName": {
-	  "Default": "DemoPipeline2",
+	  "Default": "DevSecOpsPipline_v1",
       "Description": "A name for pipeline",
       "Type": "String"
     },
@@ -201,7 +201,7 @@
         }
       }
     },	
-    "CFNValidateLambda":{
+    "CFTValidateLambda":{
       "Type":"AWS::Lambda::Function",
       "DependsOn":[
         "CodePipelineLambdaRole",
@@ -217,7 +217,7 @@
         "Role":{"Fn::GetAtt":["CodePipelineLambdaRole","Arn"]},
         "Description":"Always return success",
         "Timeout":60,
-        "Handler":"cfn_validate_lambda.lambda_handler",
+        "Handler":"cft_validate_lambda.lambda_handler",
         "Runtime":"python2.7"
       }
     },	
@@ -394,7 +394,7 @@
             "Actions": [
               {
                 "InputArtifacts": [{"Name": "TemplateSource"}],
-                "Name": "CFNParsing",
+                "Name": "CFTValidation",
                 "ActionTypeId": {
                   "Category": "Invoke",
                   "Owner": "AWS",
@@ -402,7 +402,7 @@
                   "Version": "1"
                 },
                 "Configuration": {
-                  "FunctionName": {"Ref":"CFNValidateLambda"},
+                  "FunctionName": {"Ref":"CFTValidateLambda"},
 				  "UserParameters": {"Fn::Sub": "{\"input\": \"TemplateSource\", \"file\": \"${TemplateFilePath}\",\"output\": \"${S3Bucket}\"}"}
                 },
                 "OutputArtifacts": [{"Name": "TemplateSource2"}],
@@ -436,7 +436,7 @@
 				"InputArtifacts": [{
 					"Name": "TemplateSource"
 			    }],
-				"Name": "StackValidation_Test",
+				"Name": "LiveStackValidation",
 				"ActionTypeId": {
 					"Category": "Invoke",
 					"Owner": "AWS",
@@ -529,7 +529,7 @@
   "Outputs" : {
     "LambdaFunction" : {
       "Description" : "Lambda Function Name",
-      "Value" :  {"Ref":"CFNValidateLambda"}
+      "Value" :  {"Ref":"CFTValidateLambda"}
     }
   }
 }
