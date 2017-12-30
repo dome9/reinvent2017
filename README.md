@@ -30,7 +30,10 @@
 ```
 ## Automating Security and Compliance Testing of Infrastructure-as-Code for DevSecOps
 
-This repository contains the code material from the re:Invent 2017 SID317 session.
+This repository contains the code material from the re:Invent 2017 SID317 session.<br/>
+For a full video of the talk please take a look at: https://youtu.be/xzQUmil3LBM <br/>
+For the presentation deck, please check out : https://speakerdeck.com/froyke/re-invent-2017-automating-security-and-compliance-testing-of-iac-for-devsecops
+
 
 In **v1** we are building a DevSecOps pipeline using native AWS tools: Code Pipeline, Lambda, CFN etc...<br/>
 It is a trimmed down, cleaned up version based on the good work described at: https://aws.amazon.com/blogs/devops/implementing-devsecops-using-aws-codepipeline/
